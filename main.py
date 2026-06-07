@@ -3,6 +3,8 @@ from turtle import Screen
 from snake import Snake
 from food import Food
 from score import Score
+
+
 import time
 screen = Screen()
 screen.title("MY SnakeGame")
@@ -13,6 +15,7 @@ screen.tracer(0)
 snake = Snake()
 food = Food()
 score = Score()
+
 
 
 screen.listen()
@@ -31,8 +34,19 @@ while game_is_on:
     
     if snake.head.distance(food) < 15:
         score.add_score()
+        snake.extend()
         food.refresh()
-
+    
+    if snake.head.xcor() >285 or snake.head.xcor() < -285 or snake.head.ycor() >285 or snake.head.ycor() < -285:
+        game_is_on = False 
+        score.game_over()
+    
+    for seg in snake.segment:
+        if seg == snake.head:
+            pass
+        elif snake.head.distance(seg) < 10:
+            game_is_on = False
+            score.game_over()
 
 
 
